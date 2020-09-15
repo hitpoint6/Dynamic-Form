@@ -34,7 +34,7 @@
                 {% endfor %}
             </div>
             <input type="button" value="Add More" id="add_more">
-            <div id="empty_form">
+            <div id="empty_form" style="display:none">
                 <table class='no_error'>
                     {{ formset.empty_form.as_table }}
                 </table>
