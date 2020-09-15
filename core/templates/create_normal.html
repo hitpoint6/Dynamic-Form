@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'core/styles.css' %}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>Book</title>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h3>{{heading}}</h3>
+
+        <form class="form-horizontal" method="POST" action="">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div id="form_set">
+                {% for form in formset.forms %}
+                <table class='no_error'>
+                    {{ form.as_table }}
+                </table>
+                {% endfor %}
+            </div>
+            <input type="button" value="Add More" id="add_more">
+            <div id="empty_form">
+                <table class='no_error'>
+                    {{ formset.empty_form.as_table }}
+                </table>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+            <script>
+                $('#add_more').click(function () {
+                    var form_idx = $('#id_form-TOTAL_FORMS').val();
+                    console.log(form_idx)
+                    $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+                    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+                });
+            </script>
+
+
+</body>
+
+</html>
